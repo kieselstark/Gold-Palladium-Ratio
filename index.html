@@ -6,7 +6,7 @@
   <title>📈 Gold-Palladium-Ratio</title>
 
   <!-- PWA Meta Tags -->
-  <meta name="theme-color" content="#0f172a">
+  <meta name="theme-color" content="#7c3aed">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Gold/Palladium">
@@ -21,33 +21,30 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      color: #e2e8f0;
+      background: linear-gradient(135deg, #f3e8ff 0%, #a855f7 100%);
+      color: #333;
       padding: 20px;
       min-height: 100vh;
     }
     .container {
       max-width: 1200px;
       margin: 0 auto;
-      background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+      background: white;
       border-radius: 16px;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
       overflow: hidden;
-      border: 1px solid #475569;
     }
     h1 {
       text-align: center;
       padding: 30px 20px;
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      color: #f1f5f9;
+      background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+      color: white;
       font-size: 2rem;
       font-weight: 600;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
     .chart-wrapper {
       padding: 30px;
       position: relative;
-      background: rgba(30, 41, 59, 0.5);
     }
     canvas {
       max-width: 100%;
@@ -56,51 +53,64 @@
     .loading {
       text-align: center;
       padding: 40px;
-      color: #94a3b8;
+      color: #777;
       font-size: 1.1rem;
     }
     .info-box {
-      background: rgba(15, 23, 42, 0.8);
-      border-left: 4px solid #64748b;
+      background: #faf5ff;
+      border-left: 4px solid #7c3aed;
       padding: 20px;
       margin: 20px 30px;
       border-radius: 8px;
-      border: 1px solid #334155;
     }
     .info-box h3 {
-      color: #f1f5f9;
+      color: #7c3aed;
       margin-bottom: 10px;
       font-size: 1.1rem;
     }
     .info-box p {
-      color: #cbd5e1;
+      color: #6b21a8;
       line-height: 1.6;
       margin-bottom: 8px;
     }
     .current-ratio {
       text-align: center;
       padding: 20px;
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      color: #f8fafc;
+      background: #a855f7;
+      color: white;
       font-size: 1.5rem;
       font-weight: 600;
-      border-top: 1px solid #475569;
-      border-bottom: 1px solid #475569;
+    }
+    .warning-box {
+      background: #fef3c7;
+      border-left: 4px solid #f59e0b;
+      padding: 15px;
+      margin: 20px 30px;
+      border-radius: 8px;
+    }
+    .warning-box h4 {
+      color: #d97706;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+    .warning-box p {
+      color: #92400e;
+      font-size: 0.9rem;
+      line-height: 1.5;
     }
     #installBtn {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      border: 1px solid #475569;
+      background: #a855f7;
+      border: none;
       padding: 15px;
       border-radius: 50%;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
       display: none;
       font-size: 1.2rem;
       transition: transform 0.2s;
-      color: #f1f5f9;
     }
     #installBtn:hover {
       transform: scale(1.1);
@@ -109,15 +119,21 @@
       h1 { font-size: 1.5rem; padding: 20px; }
       .chart-wrapper { padding: 20px; }
       .info-box { margin: 15px 20px; }
+      .warning-box { margin: 15px 20px; }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>📈 Gold-Palladium-Ratio (letzte 100 Jahre)</h1>
+    <h1>📈 Gold-Palladium-Ratio (letzte 50 Jahre)</h1>
     
     <div class="current-ratio" id="currentRatio">
       Aktuelles Verhältnis wird geladen...
+    </div>
+
+    <div class="warning-box">
+      <h4>⚠️ Besonderheit Palladium</h4>
+      <p>Palladium ist hauptsächlich ein Industriemetall (90% für Katalysatoren). Die Ratio ist daher extrem volatil und stark von Angebot/Nachfrage in der Automobilindustrie abhängig.</p>
     </div>
 
     <div class="chart-wrapper">
@@ -128,11 +144,11 @@
     
     <div class="info-box">
       <h3>📊 Interpretation der Gold-Palladium-Ratio</h3>
-      <p><strong>Ratio < 1.0:</strong> Palladium teurer als Gold (sehr selten, extremer Industriebedarf)</p>
-      <p><strong>Ratio 1.0-2.0:</strong> Palladium sehr stark, meist Automobilindustrie-getrieben</p>
-      <p><strong>Ratio 2.0-4.0:</strong> Ausgewogenes Verhältnis, normale Marktbedingungen</p>
-      <p><strong>Ratio > 4.0:</strong> Gold dominant, oft bei Wirtschaftsunsicherheit</p>
-      <p><em>Palladium ist das volatilste Edelmetall aufgrund der starken Industrienachfrage</em></p>
+      <p><strong>Ratio < 1.0:</strong> Palladium teurer als Gold (sehr selten, nur in extremen Engpässen)</p>
+      <p><strong>Ratio 1.0-2.0:</strong> Palladium sehr stark (Boom-Phasen, Angebotsknappheit)</p>
+      <p><strong>Ratio 2.0-4.0:</strong> Ausgewogenes Verhältnis (normale Marktbedingungen)</p>
+      <p><strong>Ratio 4.0-8.0:</strong> Gold dominiert (schwache Industrienachfrage)</p>
+      <p><strong>Ratio > 8.0:</strong> Palladium sehr schwach (Rezession, E-Auto-Trend)</p>
     </div>
   </div>
 
@@ -144,40 +160,48 @@
 
     async function fetchData() {
       try {
-        // Simulierte historische Daten für Gold-Palladium-Ratio (1925-2025)
-        const startDate = new Date(1925, 0, 1);
+        // Simulierte historische Daten für Gold-Palladium-Ratio (1975-2025)
+        // Palladium-Handel begann erst in den 1970ern richtig
+        const startDate = new Date(1975, 0, 1);
         const endDate = new Date(2025, 4, 30);
         const labels = [];
         const ratios = [
-          // 1925–1960: Palladium kaum gehandelt, sehr hohe Ratio (10-20)
-          ...Array(420).fill(0).map((_, i) => 15 + (i % 60) * 0.1 + (Math.sin(i / 24) * 2)),
+          // 1975–1985: Frühe Jahre, hohe Volatilität 2-8
+          ...Array(120).fill(0).map((_, i) => 3 + (i % 24) * 0.3 + (Math.sin(i / 12) * 2)),
           
-          // 1960–1980: Industrielle Nutzung beginnt, Ratio sinkt auf 8-15
-          ...Array(240).fill(0).map((_, i) => 15 - (i / 240) * 7 + (Math.sin(i / 12) * 2)),
+          // 1985–1990: Stabilisierung um 3-5
+          ...Array(60).fill(0).map((_, i) => 3.5 + (Math.sin(i / 12) * 1.2) + (Math.sin(i / 36) * 0.8)),
           
-          // 1980–2000: Automobilindustrie wächst, Ratio 3-10
-          ...Array(240).fill(0).map((_, i) => 8 - (i / 240) * 5 + (Math.sin(i / 12) * 2)),
+          // 1990–2000: Moderate Schwankungen 2-6
+          ...Array(120).fill(0).map((_, i) => 3 + (Math.sin(i / 18) * 1.8) + (Math.sin(i / 6) * 0.7)),
           
-          // 2000–2008: Katalysator-Boom, Ratio fällt auf 2-6
-          ...Array(96).fill(0).map((_, i) => 6 - (i / 96) * 3 + (Math.sin(i / 12) * 1)),
-          
-          // 2008–2015: Finanzkrise, volatile Schwankungen 1-8
-          ...Array(84).fill(0).map((_, i) => 3 + (Math.sin(i / 6) * 4) + (Math.sin(i / 18) * 2)),
-          
-          // 2015–2020: Diesel-Skandal, extreme Volatilität 0.5-6
-          ...Array(60).fill(0).map((_, i) => {
-            if (i < 12) return 4 - (i / 12) * 3; // 2015-2016: Absturz auf 1
-            if (i < 36) return 1 + (i - 12) / 24 * 4; // 2017-2019: Erholung auf 5
-            return 5 - (i - 36) / 24 * 4; // 2020: COVID-Crash auf 1
+          // 2000–2008: Palladium-Boom, Ratio fällt dramatisch auf 0.5-3
+          ...Array(96).fill(0).map((_, i) => {
+            if (i < 36) return 4 - (i / 36) * 3; // Fall auf 1.0
+            if (i < 60) return 1 + (Math.sin((i - 36) / 6) * 0.4); // Volatilität um 1.0
+            return 1 + (i - 60) / 36 * 2; // Anstieg auf 3.0
           }),
           
-          // 2020–2025: Chip-Mangel & E-Mobilität, extreme Schwankungen 0.8-3.5
-          ...Array(65).fill(0).map((_, i) => {
-            if (i < 12) return 1 + (i / 12) * 2.5; // 2020-2021: Anstieg auf 3.5
-            if (i < 24) return 3.5 - (i - 12) / 12 * 2.5; // 2021-2022: Fall auf 1
-            if (i < 36) return 1 + (i - 24) / 12 * 1.5; // 2022-2023: Anstieg auf 2.5
-            return 2.5 + (Math.sin((i - 36) / 6) * 0.8); // 2023-2025: Volatilität
-          })
+          // 2008–2016: Finanzkrise, dann Erholung 1.5-5
+          ...Array(96).fill(0).map((_, i) => {
+            if (i < 24) return 3 + (i / 24) * 2; // Anstieg auf 5
+            return 5 - (i - 24) / 72 * 3; // Langsamer Fall auf 2
+          }),
+          
+          // 2016–2019: Palladium-Superzyklus, extreme Knappheit 0.5-2
+          ...Array(36).fill(0).map((_, i) => 2 - (i / 36) * 1.3 + (Math.sin(i / 6) * 0.3)),
+          
+          // 2019–2020: Palladium-Peak, Ratio unter 1.0!
+          ...Array(12).fill(0).map((_, i) => 0.7 - (i / 12) * 0.2 + (Math.sin(i / 3) * 0.1)),
+          
+          // 2020–2022: COVID-Crash, dann Erholung 0.5-3
+          ...Array(24).fill(0).map((_, i) => {
+            if (i < 6) return 0.5 + (i / 6) * 1.5; // Schneller Anstieg
+            return 2 + (Math.sin((i - 6) / 6) * 1);
+          }),
+          
+          // 2022–2025: E-Auto-Trend schwächt Palladium, Ratio steigt 2-6
+          ...Array(41).fill(0).map((_, i) => 2.5 + (i / 41) * 3 + (Math.sin(i / 8) * 1.2))
         ];
 
         // Labels für jeden Monat generieren
@@ -210,8 +234,8 @@
             datasets: [{
               label: 'Gold/Palladium Ratio (Simuliert)',
               data: ratios,
-              borderColor: '#64748b',
-              backgroundColor: 'rgba(100, 116, 139, 0.1)',
+              borderColor: '#a855f7',
+              backgroundColor: 'rgba(168, 85, 247, 0.1)',
               tension: 0.3,
               pointRadius: 1,
               pointHoverRadius: 5,
@@ -225,26 +249,27 @@
               legend: { 
                 display: true,
                 labels: {
-                  color: '#f1f5f9',
+                  color: '#7c3aed',
                   font: { size: 14 }
                 }
               },
               tooltip: {
                 mode: 'index',
                 intersect: false,
-                backgroundColor: 'rgba(15, 23, 42, 0.95)',
-                titleColor: '#f1f5f9',
-                bodyColor: '#cbd5e1',
-                borderColor: '#64748b',
+                backgroundColor: 'rgba(168, 85, 247, 0.9)',
+                titleColor: 'white',
+                bodyColor: 'white',
+                borderColor: '#a855f7',
                 borderWidth: 1,
                 callbacks: {
                   label: function(context) {
                     const ratio = context.parsed.y;
                     let interpretation = '';
-                    if (ratio < 1.0) interpretation = ' (Palladium extrem teuer)';
+                    if (ratio < 1.0) interpretation = ' (Palladium dominiert!)';
                     else if (ratio < 2.0) interpretation = ' (Palladium sehr stark)';
-                    else if (ratio > 4.0) interpretation = ' (Gold dominant)';
-                    else interpretation = ' (ausgewogen)';
+                    else if (ratio < 4.0) interpretation = ' (ausgewogen)';
+                    else if (ratio < 8.0) interpretation = ' (Gold stärker)';
+                    else interpretation = ' (Palladium sehr schwach)';
                     
                     return `Ratio: ${ratio.toFixed(2)}${interpretation}`;
                   }
@@ -259,35 +284,41 @@
             scales: {
               x: {
                 grid: {
-                  color: '#334155'
+                  color: '#f3e8ff'
                 },
                 ticks: {
-                  color: '#94a3b8',
+                  color: '#6b21a8',
                   maxTicksLimit: 10
                 }
               },
               y: {
                 beginAtZero: false,
+                min: 0,
+                max: 10,
                 grid: {
                   color: (context) => {
-                    if (Math.abs(context.tick.value - 2.0) < 0.01) {
-                      return '#22c55e'; // Grüne Linie bei 2.0 (starkes Palladium)
+                    if (Math.abs(context.tick.value - 1.0) < 0.05) {
+                      return '#ef4444'; // Rote Linie bei 1.0 (Parität - sehr selten!)
                     }
-                    if (Math.abs(context.tick.value - 4.0) < 0.01) {
-                      return '#ef4444'; // Rote Linie bei 4.0 (Gold dominant)
+                    if (Math.abs(context.tick.value - 2.0) < 0.05) {
+                      return '#f59e0b'; // Orange bei 2.0 (Palladium stark)
                     }
-                    return '#334155';
+                    if (Math.abs(context.tick.value - 4.0) < 0.05) {
+                      return '#22c55e'; // Grün bei 4.0 (ausgewogen)
+                    }
+                    return '#f3e8ff';
                   },
                   lineWidth: (context) => {
-                    if (Math.abs(context.tick.value - 2.0) < 0.01 || 
-                        Math.abs(context.tick.value - 4.0) < 0.01) {
+                    if (Math.abs(context.tick.value - 1.0) < 0.05 || 
+                        Math.abs(context.tick.value - 2.0) < 0.05 ||
+                        Math.abs(context.tick.value - 4.0) < 0.05) {
                       return 2;
                     }
                     return 1;
                   }
                 },
                 ticks: {
-                  color: '#94a3b8',
+                  color: '#6b21a8',
                   callback: function(value) {
                     return value.toFixed(1);
                   }
@@ -327,13 +358,6 @@
         installBtn.style.display = 'none';
       }
     });
-
-    // Service Worker Registrierung (deaktiviert für sandboxed Umgebung)
-    // if ('serviceWorker' in navigator) {
-    //   navigator.serviceWorker.register('/sw.js')
-    //     .then(() => console.log('Service Worker registriert'))
-    //     .catch(err => console.log('SW nicht registriert:', err));
-    // }
 
     fetchData();
   </script>
